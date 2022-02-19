@@ -1,0 +1,16 @@
+모듈
+
+npm i react-router-dom@5.3.0
+npm i react-query
+
+익스텐션
+
+vscode-styled-components
+
+타입스크립트 적용
+
+npm install --save typescript @types/node @types/react @types/react-dom @types/jest
+
+타입스크립트
+
+npm i --save-dev @types/react-router-dom
