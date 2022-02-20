@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react"
+import { useQuery } from "react-query"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { fetchCoins } from "../api"
+import { Helmet, HelmetProvider } from "react-helmet-async";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -32,6 +34,10 @@ const Coin = styled.li`
         a {
             color: ${(props) => props.theme.accentColor}
         }
+        img {
+            transform: rotate(360deg);
+            transition: 1s;
+        }
     }
 `
 
@@ -39,6 +45,7 @@ const Coin = styled.li`
 const Title = styled.h1`
     font-size: 48px;
     color : ${props => props.theme.accentColor};
+    font-family: Arial, Helvetica, sans-serif;
 `
 const Loader = styled.span`
     text-align: center;
@@ -50,7 +57,7 @@ const Img = styled.img`
     margin-right: 10px;
 `
 
-interface CoinInterface {
+interface ICoin {
     id: string,
     name: string,
     symbol: string,
@@ -61,8 +68,8 @@ interface CoinInterface {
 }
 
 function Coins() {
-    const [coins, setCoins] = useState<CoinInterface[]>([])
-    const [loading, setLoading] = useState(true)
+    // const [coins, setCoins] = useState<ICoin[]>([])
+    // const [loading, setLoading] = useState(true)
     /* 
         1.컴포넌트가 시작될 때
         2.컴포넌트가 끝날 때
@@ -70,27 +77,48 @@ function Coins() {
 
         이번 useEffect의 경우 컴포넌트가 처음 시작될때 한번만 하기 위해서 씀<div className=""></div>
     */
-   
-    useEffect(() => {
-        //즉시실행
-        (async() => {
-            const response = await fetch("https://api.coinpaprika.com/v1/coins")
-            const json = await response.json()
-            setCoins(json.slice(0, 100))
-            setLoading(false)
-        })()
-    }, [])
+    // useEffect(() => {
+    //     //즉시실행
+    //     (async() => {
+    //         const response = await fetch("https://api.coinpaprika.com/v1/coins")
+    //         const json = await response.json()
+    //         setCoins(json.slice(0, 100))
+    //         setLoading(false)
+    //     })()
+    // }, [])
+
+    const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins)
+    /*
+    
+        useQuery 총 2가지 인자가 필요함.
+        첫번째 고유식별자,두번째 fetcher 함수
+
+        isLoading 은 boolean 값을 갖는다. loading 컴포넌트 대체 가능
+        fetchCoins 가 끝나면 함수의 데이터를 data에 담아줌
+        
+        fetchCoins 가 로딩중이라면 isLoading 에서 알려줌.
+
+        useQuery 에 type 넣어줌 또한 data 에 ? 달아줘서 undefined 대비
+
+        react-query  가 데이터를 캐시에 저장해두기 때문에 데이터를 파괴하지 않음.
+    
+    */
 
     return (
         <Container>
+            <HelmetProvider>
+                <Helmet>
+                    <title>코인</title>
+                </Helmet>
+            </HelmetProvider>
             <Header>
-                <Title>코인</Title>
+                <Title>Coin</Title>
             </Header>
             {
-                loading
+                isLoading
                 ? <Loader>Loading ...</Loader>
                 : <CoinsList>
-                    {coins.map(coin => (
+                    {data?.slice(0,100).map(coin => (
                         <Coin key={coin.id}>
                             {/* a태그를 이용하면 새로고침이 되기때문에 사용하지않음 */}
                             {/* Link 로 Object 형식으로 데이터보내기도 가능함 */}

@@ -1,6 +1,6 @@
-
 import { createGlobalStyle } from 'styled-components';
 import Router from './Router';
+import { ReactQueryDevtools } from 'react-query/devtools'
 
 
 // document 의 head로 찾아가서 주입시켜줌, 렌더링될때 전역스코프에 스타일들을 올려준다.
@@ -74,6 +74,7 @@ function App() {
     <>
       <GlobalStyle/>
       <Router/>
+      <ReactQueryDevtools initialIsOpen={true}/>
     </>
   )
 }
