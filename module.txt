@@ -5,6 +5,7 @@ npm i react-query
 npm install --save react-apexcharts apexcharts
 npm i react-helmet
 npm i react-helmet-async
+npm install recoil
 
 익스텐션
 

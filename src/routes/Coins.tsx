@@ -3,6 +3,8 @@ import { Link } from "react-router-dom"
 import styled from "styled-components"
 import { fetchCoins } from "../api"
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { useSetRecoilState } from "recoil";
+import { isDartAtom } from "../atoms";
 
 const Container = styled.div`
     padding: 0px 20px;
@@ -15,15 +17,32 @@ const Header = styled.header`
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+`
+const Btn = styled.button`
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color : gray;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color : ${(props) => props.theme.textColor === 'white' ? 'white' : 'black'};
+    transition: color 1s;
+    &:hover {
+        font-weight: bold;
+    }
 `
 
 const CoinsList = styled.ul``
 
 const Coin = styled.li`
-    background-color: white;
-    color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.cardBgColor};
+    color: ${(props) => props.theme.textColor};
     margin-bottom: 10px;
     border-radius: 15px;
+    border: 1px solid white;
     a {
         display: flex;
         align-items: center;
@@ -103,6 +122,8 @@ function Coins() {
         react-query  가 데이터를 캐시에 저장해두기 때문에 데이터를 파괴하지 않음.
     
     */
+    const setDarkAtom = useSetRecoilState(isDartAtom)
+    const toggleDarkAtom = () => setDarkAtom(prev => !prev)
 
     return (
         <Container>
@@ -113,6 +134,7 @@ function Coins() {
             </HelmetProvider>
             <Header>
                 <Title>Coin</Title>
+                <Btn onClick={toggleDarkAtom}>Toggle Mode</Btn>
             </Header>
             {
                 isLoading

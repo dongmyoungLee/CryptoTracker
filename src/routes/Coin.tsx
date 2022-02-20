@@ -86,6 +86,10 @@ interface PriceData {
     }
 }
 
+interface ICoinProps {
+    
+}
+
 const Container = styled.div`
     padding: 0px 20px;
     max-width: 480px;
@@ -157,7 +161,7 @@ const Tab = styled.span<{isActive : boolean}>`
   }
 `
 
-function Coin() {
+function Coin({} : ICoinProps) {
     const {coinId} = useParams<RouteParams>()
     const { state } = useLocation<RouteState>()
     // useLocation -> Link 값 받아오기 (string)
@@ -202,7 +206,6 @@ function Coin() {
     */
     const loading = infoLoading || tickersLoading
     const history = useHistory()
-    console.log(history)
     return (
         <Container>
             <HelmetProvider>

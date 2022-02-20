@@ -1,7 +1,6 @@
 import { useQuery } from "react-query"
 import styled from "styled-components"
 import { fetchCoinTickers } from "../api"
-import "../style.css"
 
 const PriceList = styled.ul``
 

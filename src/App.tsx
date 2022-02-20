@@ -1,6 +1,10 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import Router from './Router';
 import { ReactQueryDevtools } from 'react-query/devtools'
+import { darkTheme, lightTheme } from './theme';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { isDartAtom } from './atoms';
 
 
 // document 의 head로 찾아가서 주입시켜줌, 렌더링될때 전역스코프에 스타일들을 올려준다.
@@ -70,12 +74,32 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
+  // const [isDark, setIsDark] = useState(true)
+  // const toggleDark = () => setIsDark((current) => !current)
+  // App 에서 생성 -> 라우터로 보냄 -> 라우터에서 받을준비(props & interface) -> coins로보냄  -> coins 에서 받을준비(props & interface) -> onclick 사용
+
+  const isDark = useRecoilValue(isDartAtom)
   return (
     <>
-      <GlobalStyle/>
-      <Router/>
-      <ReactQueryDevtools initialIsOpen={true}/>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+        <GlobalStyle/>
+        <Router/>
+        <ReactQueryDevtools initialIsOpen={true}/>
+      </ThemeProvider>
     </>
   )
 }
+
+/*
+
+App (isDark, modifierFn)
+
+-> Router -> Coins (modifierFn)
+-> Router -> Coin -> Chart (isDark)
+
+현재의 global state 정의 -> 어플리케이션이 특정 value 에 접근해야할때 사용함. component가
+어디있던 간에. 이렇게 하면 불편하기 때문에 state management 사용
+
+ */
+
 export default App;
