@@ -16,17 +16,25 @@
 
 ## 📦 Packages
 
-- [x] update...
+- [x] ES6
+- [x] TYPESCRIPT
+- [x] REACT
+- [x] REACT-ROUTER
+- [x] REACT-QUERY
+- [x] REACT-APEXCHARTS
+- [x] REACT-HELMET
+- [x] STYLED-COMPONENTS
+- [x] RECOIL
 
 ## 📖 Theory
 
-- [x] update...
-
-## ⚙ Features
-
-### 🙎‍♂️ Users
-
-- [x] update...
+- [x] useRecoilValue
+- [x] useLocation
+- [x] useLocation
+- [x] useParams
+- [x] useRouteMatch
+- [x] useHistory
+- [x] useQuery
 
 ## 🚀 Deployment
 
@@ -34,7 +42,8 @@
 
 ## ⏳ More Todos
 
-- [x] update...
+- [ ] Pirce Color info
+- [ ] Other Chart
 
 ## 🔗 Link
 
